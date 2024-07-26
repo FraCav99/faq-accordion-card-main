@@ -1,0 +1,152 @@
+/*========================
+  CSS reset
+==========================*/
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh; /* Fallback if dvh is not supported */
+  min-height: 100dvh;
+  line-height: 1.5;
+}
+
+h1 {
+  /* Set shorter line heights on headings and interactive elements */
+  line-height: 1.1;
+
+  /* Balance text wrapping on headings */
+  text-wrap: balance;
+
+  /* Not part of the reset, just put here for convenience */
+  text-transform: uppercase;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/*========================
+  Initial Styles
+==========================*/
+
+:root {
+  --clr-primary-100: hsl(238, 29%, 16%);
+  --clr-primary-200: hsl(14, 88%, 65%);
+  --clr-primary-300: hsl(273, 75%, 66%);
+  --clr-primary-400: hsl(240, 73%, 65%);
+
+  --clr-neutral-100: hsl(237, 12%, 33%);
+  --clr-neutral-200: hsl(240, 6%, 50%);
+  --clr-neutral-300: hsl(240, 5%, 91%);
+
+  --fw-700: 700;
+
+  --font-family: "Kumbh Sans", sans-serif;
+}
+
+body {
+  background-image: linear-gradient(
+    var(--clr-primary-300),
+    var(--clr-primary-400)
+  );
+
+  font-family: var(--font-family);
+
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+main {
+  align-content: center;
+}
+
+/*========================
+  Faq Card Styles
+==========================*/
+
+.faq-card {
+  background-color: white;
+  inline-size: min(50rem, calc(100% - 3rem));
+  margin-inline: auto;
+}
+
+/*========================
+  Accordion Styles
+==========================*/
+details {
+  --details-transitions-ms: 300ms;
+  border-bottom: 1px solid var(--clr-neutral-300);
+  transition: height 300ms;
+}
+
+details summary {
+  list-style: none;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color var(--details-transitions-ms),
+    font-weight var(--details-transitions-ms);
+}
+
+details p {
+  padding: 0 1rem 1rem 1rem;
+  color: var(--clr-neutral-200);
+}
+
+details:is(:hover, :focus-visible) {
+  cursor: pointer;
+}
+
+details:not([open]):is(:hover, :focus-visible) summary {
+  color: var(--clr-primary-200);
+}
+
+details[open] summary {
+  font-weight: var(--fw-700);
+}
+
+details summary::after {
+  content: url("images/icon-arrow-down.svg");
+  transition: rotate var(--details-transitions-ms);
+}
+
+details[open] summary::after {
+  rotate: 180deg;
+}
+
+/*========================
+  Footer Styles
+==========================*/
+
+.attribution {
+  font-size: 0.6875rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.attribution a {
+  color: var(--clr-neutral-300);
+}
