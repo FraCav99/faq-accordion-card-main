@@ -30,9 +30,6 @@ h1 {
 
   /* Balance text wrapping on headings */
   text-wrap: balance;
-
-  /* Not part of the reset, just put here for convenience */
-  text-transform: uppercase;
 }
 
 /* A elements that don't have a class get default styles */
@@ -42,9 +39,20 @@ a:not([class]) {
 }
 
 /* Make images easier to work with */
-img {
+img,
+picture {
   max-width: 100%;
   display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /*========================
@@ -62,6 +70,11 @@ img {
   --clr-neutral-300: hsl(240, 5%, 91%);
 
   --fw-700: 700;
+  --fw-400: 400;
+
+  --fs-title: 2rem;
+  --fs-summary: 0.875rem;
+  --fs-body: 0.75rem;
 
   --font-family: "Kumbh Sans", sans-serif;
 }
@@ -73,13 +86,11 @@ body {
   );
 
   font-family: var(--font-family);
+  font-size: var(--fs-body);
 
   display: grid;
   grid-template-rows: 1fr auto;
-}
-
-main {
-  align-content: center;
+  place-items: center;
 }
 
 /*========================
@@ -88,52 +99,123 @@ main {
 
 .faq-card {
   background-color: white;
-  inline-size: min(50rem, calc(100% - 3rem));
-  margin-inline: auto;
+  inline-size: min(57rem, calc(100% - 3rem));
+  border-radius: 1.25rem;
+  box-shadow: 0 3.125rem 3.125rem -1.25rem hsla(260, 74%, 27%, 0.5);
+  position: relative;
+}
+
+@media screen and (min-width: 750px) {
+  .faq-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    block-size: 28.7rem;
+  }
 }
 
 /*========================
-  Accordion Styles
+  Illustrations Styles
 ==========================*/
-details {
-  --details-transitions-ms: 300ms;
-  border-bottom: 1px solid var(--clr-neutral-300);
-  transition: height 300ms;
-}
-
-details summary {
-  list-style: none;
-  padding: 1rem;
+.illustrations {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: color var(--details-transitions-ms),
-    font-weight var(--details-transitions-ms);
+  justify-content: center;
+  background-image: url("images/bg-pattern-mobile.svg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  height: 9rem;
 }
 
-details p {
-  padding: 0 1rem 1rem 1rem;
+.illustration-wrapper {
+  translate: 0 -55%;
+}
+
+@media screen and (min-width: 750px) {
+  .illustrations {
+    align-items: center;
+    background-image: url("images/bg-pattern-desktop.svg");
+    background-position: -600px -300px;
+    position: relative;
+    height: auto;
+  }
+
+  .illustrations::before {
+    content: url("images/illustration-box-desktop.svg");
+    position: absolute;
+    z-index: 1;
+    left: -94px;
+    top: 190px;
+  }
+
+  .illustration-wrapper {
+    translate: -4rem 0;
+  }
+
+  .picture-wrapper {
+    overflow: hidden;
+  }
+}
+
+/*========================
+  Accordion Group Styles
+==========================*/
+
+.accordion-group {
+  padding: 0 1.5rem 3rem 1.5rem;
+  overflow-y: auto;
+}
+
+.faq-title {
+  font-size: var(--fs-title);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+  .accordion-group {
+    padding: 4.0625rem 5.9375rem 4.0625rem 0;
+  }
+
+  .faq-title {
+    text-align: left;
+  }
+}
+
+.accordion {
+  border-bottom: 1px solid var(--clr-neutral-300);
+  padding-block: 1rem;
   color: var(--clr-neutral-200);
 }
 
-details:is(:hover, :focus-visible) {
+.accordion-title {
+  font-size: var(--fs-summary);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 300ms;
+  color: var(--clr-primary-100);
+}
+
+.accordion-title:hover,
+.accordion-title:focus-visible {
   cursor: pointer;
-}
-
-details:not([open]):is(:hover, :focus-visible) summary {
   color: var(--clr-primary-200);
+  outline: none;
 }
 
-details[open] summary {
+.accordion[open] .accordion-title {
   font-weight: var(--fw-700);
+  margin-bottom: 1rem;
 }
 
-details summary::after {
+.accordion-title::after {
   content: url("images/icon-arrow-down.svg");
-  transition: rotate var(--details-transitions-ms);
+  transition: rotate 300ms;
 }
 
-details[open] summary::after {
+.accordion[open] .accordion-title::after {
   rotate: 180deg;
 }
 
